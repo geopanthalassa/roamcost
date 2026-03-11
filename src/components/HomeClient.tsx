@@ -5,6 +5,13 @@ import { City } from '@/types/database';
 import Link from 'next/link';
 import SearchBar from '@/components/SearchBar';
 import CityCard from '@/components/CityCard';
+import dynamic from 'next/dynamic';
+
+const WorldMap = dynamic(() => import('@/components/WorldMap'), {
+    ssr: false,
+    loading: () => <div style={{ height: '600px', backgroundColor: 'var(--accent)', borderRadius: 'var(--radius-xl)', opacity: 0.5 }} />
+});
+
 interface HomeClientProps {
     featuredCities: City[];
     cheapestCities: City[];
@@ -171,4 +178,3 @@ export default function HomeClient({
         </div>
     );
 }
-
