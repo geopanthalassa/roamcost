@@ -1,49 +1,59 @@
 :root {
-  /* Vibrant & Friendly Palette */
-  --primary: #4f46e5;
-  /* Vibrant Indigo/Violet */
-  --primary-dark: #3730a3;
-  --secondary: #fbbf24;
-  /* Warm Amber/Yellow */
-  --accent: #8b5cf6;
-  /* Bright Violet */
-  --background: #fbfbfe;
-  /* Very light cool white */
-  --foreground: #1e1b4b;
-  /* Deep Indigo for text */
-  --muted: #6366f1;
-  --muted-foreground: #94a3b8;
+  /* FinTech x Travel High-Fidelity Palette */
+  --primary: #2A41CB;
+  /* Deep Indigo for trust */
+  --primary-glow: rgba(42, 65, 203, 0.15);
+  --secondary: #00D1FF;
+  /* Electric Cyan for action */
+  --secondary-dark: #00b8e6;
+  --accent: #E8F9F3;
+  /* Soft Mint for highlights */
+  --action-soft: #9fb8b0;
+  /* Sage/Mint from screenshot */
+  --headline: #0f172a;
+  /* Deep matte black/indigo */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --muted-light: #f1f5f9;
   --border: #e2e8f0;
   --card: #ffffff;
-  --card-foreground: #1e1b4b;
+  --card-foreground: #0f172a;
 
-  /* Status Colors */
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  /* Glassmorphism & Modern Effects */
+  --glass: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(42, 65, 203, 0.08);
 
-  /* Premium Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(79, 70, 229, 0.1);
-  --shadow-md: 0 10px 15px -3px rgba(79, 70, 229, 0.1), 0 4px 6px -2px rgba(79, 70, 229, 0.05);
-  --shadow-lg: 0 20px 25px -5px rgba(79, 70, 229, 0.15), 0 10px 10px -5px rgba(79, 70, 229, 0.04);
+  /* Modern Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(42, 65, 203, 0.08), 0 4px 6px -2px rgba(42, 65, 203, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(42, 65, 203, 0.1), 0 10px 10px -5px rgba(42, 65, 203, 0.04);
+  --shadow-xl: 0 25px 50px -12px rgba(42, 65, 203, 0.15);
 
-  /* Friendly Radius */
+  /* Spaced-out Layout Variables */
   --radius-sm: 0.5rem;
+  /* 8px */
   --radius-md: 1rem;
+  /* 16px */
   --radius-lg: 1.5rem;
+  /* 24px */
   --radius-xl: 2rem;
+  /* 32px */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f112a;
-    --foreground: #f1f5f9;
-    --primary: #818cf8;
-    --muted: #6366f1;
-    --muted-foreground: #94a3b8;
+    --background: #0f172a;
+    --foreground: #f8fafc;
+    --primary: #3d55df;
+    --muted: #94a3b8;
+    --muted-light: #1e293b;
     --border: #1e293b;
     --card: #1e293b;
-    --card-foreground: #f1f5f9;
+    --card-foreground: #f8fafc;
+    --glass: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
   }
 }
 

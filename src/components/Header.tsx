@@ -9,61 +9,31 @@ export default function Header() {
 
     return (
         <header className="header" style={{
-            borderBottom: '1px solid var(--border)',
-            padding: '1rem 0',
-            position: 'sticky',
-            top: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            backdropFilter: 'blur(12px)',
+            padding: '2rem 0',
+            backgroundColor: 'var(--background)',
             zIndex: 100,
-            boxShadow: '0 4px 6px -1px rgba(79, 70, 229, 0.05)'
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Link href="/" style={{
-                    fontSize: '1.75rem',
+                    fontSize: '1.5rem',
                     fontWeight: 900,
-                    color: 'var(--primary)',
+                    color: 'var(--headline)',
                     letterSpacing: '-0.04em',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.25rem'
+                    gap: '0.4rem'
                 }}>
-                    <span style={{ color: 'var(--secondary)' }}>Roam</span>Cost
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#105e4e' }}>
+                        <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                    RoamCost
                 </Link>
 
-                <nav style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', gap: '1.25rem', marginRight: '1rem' }}>
-                        <Link href="/rankings/cheapest" className="nav-link" style={{ fontWeight: 600, color: 'var(--foreground)' }}>Rankings</Link>
-                        <Link href="/compare" className="nav-link" style={{ fontWeight: 600, color: 'var(--foreground)' }}>Compare</Link>
-                        <Link href="/rankings/nomads" className="nav-link" style={{ fontWeight: 600, color: 'var(--foreground)' }}>Nomads</Link>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '1px solid var(--border)', paddingLeft: '1.5rem' }}>
-                        <select
-                            value={currency}
-                            onChange={(e) => setCurrency(e.target.value as any)}
-                            style={{
-                                padding: '0.4rem 0.6rem',
-                                borderRadius: 'var(--radius-sm)',
-                                border: '1px solid var(--border)',
-                                fontSize: '0.875rem',
-                                fontWeight: 700,
-                                color: 'var(--primary)',
-                                backgroundColor: 'var(--card)',
-                                cursor: 'pointer'
-                            }}
-                        >
-                            <option value="USD">USD ($)</option>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="GBP">GBP (£)</option>
-                            <option value="ARS">ARS ($)</option>
-                            <option value="BRL">BRL (R$)</option>
-                        </select>
-                        <Translator />
-                        <Link href="/rankings/quality" className="btn btn-primary" style={{ padding: '0.6rem 1.25rem', borderRadius: 'var(--radius-xl)', fontSize: '0.875rem' }}>
-                            Best Places
-                        </Link>
-                    </div>
+                <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                    <Link href="/" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Home</Link>
+                    <Link href="/rankings/quality" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Rankings</Link>
+                    <Link href="/compare" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Calculator</Link>
+                    <Link href="/rankings/nomads" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Nomad Cities</Link>
                 </nav>
             </div>
         </header>

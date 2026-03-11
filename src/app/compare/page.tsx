@@ -47,111 +47,125 @@ export default function CompareLandingPage() {
     };
 
     return (
-        <div className="container section animate-fade-in" style={{ maxWidth: '800px' }}>
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--primary)' }}>Compare <span style={{ color: 'var(--secondary)' }}>Cities</span></h1>
-                <p style={{ fontSize: '1.25rem', color: 'var(--muted)' }}>Select any two cities to see a detailed side-by-side comparison of costs and lifestyle.</p>
+        <div className="container" style={{ padding: '8rem 0', textAlign: 'center' }}>
+            {/* Minimalist Hero Section */}
+            <div style={{ marginBottom: '5rem' }}>
+                <h1 style={{
+                    fontSize: '5.5rem',
+                    fontWeight: 800,
+                    color: 'var(--headline)',
+                    lineHeight: 1.1,
+                    letterSpacing: '-0.04em',
+                    marginBottom: '2rem'
+                }}>
+                    Compare the <span style={{ color: '#5b8c71' }}>cost of living</span> <br />
+                    between any two cities
+                </h1>
+                <p style={{
+                    fontSize: '1.25rem',
+                    color: 'var(--muted)',
+                    maxWidth: '600px',
+                    margin: '0 auto',
+                    fontWeight: 500
+                }}>
+                    Explore rent, food, transport, safety, climate and more. Plan your next move or trip with real data.
+                </p>
             </div>
 
-            <div className="grid grid-cols-2" style={{ gap: '2rem' }}>
-                {/* City 1 Selection */}
-                <div style={{ position: 'relative' }}>
-                    <label style={{ display: 'block', marginBottom: '0.75rem', fontWeight: 700, color: 'var(--foreground)' }}>First City</label>
-                    {city1 ? (
-                        <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderColor: 'var(--primary)' }}>
-                            <span style={{ fontWeight: 700 }}>{city1.city}, {city1.country}</span>
-                            <button onClick={() => setCity1(null)} style={{ color: 'var(--danger)', fontWeight: 800 }}>✕</button>
+            {/* Selector Row */}
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '1rem',
+                flexWrap: 'wrap'
+            }}>
+                {/* First Search Input */}
+                <div style={{ position: 'relative', width: '300px' }}>
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type="text"
+                            placeholder={city1 ? `${city1.city}, ${city1.country}` : "Select city"}
+                            value={search1}
+                            onChange={(e) => setSearch1(e.target.value)}
+                            style={{
+                                width: '100%',
+                                padding: '1.25rem 1.5rem',
+                                borderRadius: '1rem',
+                                border: '1px solid #e0e6e4',
+                                fontSize: '1.1rem',
+                                fontWeight: 500,
+                                background: '#fff',
+                                outline: 'none'
+                            }}
+                        />
+                        <div style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5 }}>⌄</div>
+                    </div>
+                    {results1.length > 0 && (
+                        <div className="card" style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10, marginTop: '0.5rem', textAlign: 'left' }}>
+                            {results1.map(city => (
+                                <button key={city.slug} onClick={() => { setCity1(city); setResults1([]); setSearch1(''); }} style={{ width: '100%', padding: '0.75rem', borderBottom: '1px solid #eee', fontSize: '1rem' }}>
+                                    {city.city}, {city.country}
+                                </button>
+                            ))}
                         </div>
-                    ) : (
-                        <>
-                            <input
-                                type="text"
-                                placeholder="Search city..."
-                                value={search1}
-                                onChange={(e) => setSearch1(e.target.value)}
-                                style={{
-                                    width: '100%',
-                                    padding: '1.25rem',
-                                    borderRadius: 'var(--radius-md)',
-                                    border: '1px solid var(--border)',
-                                    fontSize: '1rem',
-                                    boxShadow: 'var(--shadow-sm)'
-                                }}
-                            />
-                            {results1.length > 0 && (
-                                <div className="card" style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10, marginTop: '0.5rem', padding: '0.5rem' }}>
-                                    {results1.map(city => (
-                                        <button
-                                            key={city.slug}
-                                            onClick={() => { setCity1(city); setResults1([]); setSearch1(''); }}
-                                            style={{ width: '100%', textAlign: 'left', padding: '0.75rem', borderRadius: '4px', borderBottom: '1px solid var(--border)', display: 'block' }}
-                                        >
-                                            <span style={{ fontWeight: 700 }}>{city.city}</span>, {city.country}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </>
                     )}
                 </div>
 
-                {/* City 2 Selection */}
-                <div style={{ position: 'relative' }}>
-                    <label style={{ display: 'block', marginBottom: '0.75rem', fontWeight: 700, color: 'var(--foreground)' }}>Second City</label>
-                    {city2 ? (
-                        <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderColor: 'var(--primary)' }}>
-                            <span style={{ fontWeight: 700 }}>{city2.city}, {city2.country}</span>
-                            <button onClick={() => setCity2(null)} style={{ color: 'var(--danger)', fontWeight: 800 }}>✕</button>
+                {/* Swap Icon */}
+                <div style={{ fontSize: '1.5rem', color: 'var(--muted)', margin: '0 0.5rem' }}>⇄</div>
+
+                {/* Second Search Input */}
+                <div style={{ position: 'relative', width: '300px' }}>
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type="text"
+                            placeholder={city2 ? `${city2.city}, ${city2.country}` : "Select city"}
+                            value={search2}
+                            onChange={(e) => setSearch2(e.target.value)}
+                            style={{
+                                width: '100%',
+                                padding: '1.25rem 1.5rem',
+                                borderRadius: '1rem',
+                                border: '1px solid #e0e6e4',
+                                fontSize: '1.1rem',
+                                fontWeight: 500,
+                                background: '#fff',
+                                outline: 'none'
+                            }}
+                        />
+                        <div style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5 }}>⌄</div>
+                    </div>
+                    {results2.length > 0 && (
+                        <div className="card" style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10, marginTop: '0.5rem', textAlign: 'left' }}>
+                            {results2.map(city => (
+                                <button key={city.slug} onClick={() => { setCity2(city); setResults2([]); setSearch2(''); }} style={{ width: '100%', padding: '0.75rem', borderBottom: '1px solid #eee', fontSize: '1rem' }}>
+                                    {city.city}, {city.country}
+                                </button>
+                            ))}
                         </div>
-                    ) : (
-                        <>
-                            <input
-                                type="text"
-                                placeholder="Search city..."
-                                value={search2}
-                                onChange={(e) => setSearch2(e.target.value)}
-                                style={{
-                                    width: '100%',
-                                    padding: '1.25rem',
-                                    borderRadius: 'var(--radius-md)',
-                                    border: '1px solid var(--border)',
-                                    fontSize: '1rem',
-                                    boxShadow: 'var(--shadow-sm)'
-                                }}
-                            />
-                            {results2.length > 0 && (
-                                <div className="card" style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10, marginTop: '0.5rem', padding: '0.5rem' }}>
-                                    {results2.map(city => (
-                                        <button
-                                            key={city.slug}
-                                            onClick={() => { setCity2(city); setResults2([]); setSearch2(''); }}
-                                            style={{ width: '100%', textAlign: 'left', padding: '0.75rem', borderRadius: '4px', borderBottom: '1px solid var(--border)', display: 'block' }}
-                                        >
-                                            <span style={{ fontWeight: 700 }}>{city.city}</span>, {city.country}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </>
                     )}
                 </div>
-            </div>
 
-            <div style={{ marginTop: '4rem', textAlign: 'center' }}>
+                {/* Compare Button */}
                 <button
                     onClick={handleCompare}
                     disabled={!city1 || !city2}
-                    className="btn btn-primary"
                     style={{
                         padding: '1.25rem 3rem',
-                        fontSize: '1.25rem',
-                        borderRadius: 'var(--radius-xl)',
-                        opacity: (!city1 || !city2) ? 0.5 : 1,
+                        background: '#9fb8b0',
+                        color: '#fff',
+                        borderRadius: '0.875rem',
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                        border: 'none',
                         cursor: (!city1 || !city2) ? 'not-allowed' : 'pointer',
-                        boxShadow: '0 10px 15px -3px rgba(79, 70, 229, 0.3)'
+                        opacity: (!city1 || !city2) ? 0.7 : 1,
+                        transition: 'all 0.2s',
+                        marginLeft: '0.5rem'
                     }}
                 >
-                    Start Comparison
+                    Compare
                 </button>
             </div>
         </div>

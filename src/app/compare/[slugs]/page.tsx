@@ -74,60 +74,60 @@ export default function ComparePage({ params }: ComparePageProps) {
                 <p style={{ color: 'var(--muted)', fontSize: '1.25rem' }}>Detailed side-by-side breakdown of living standards and costs.</p>
             </div>
 
-            <div className="card" style={{ padding: 0, overflow: 'hidden', border: 'none', boxShadow: 'var(--shadow-lg)' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: 'var(--primary)', color: 'white' }}>
-                            <th style={{ padding: '2rem', textAlign: 'left', fontSize: '1.1rem' }}>Key Metric</th>
-                            <th style={{ padding: '2rem', textAlign: 'center', fontSize: '1.5rem', fontWeight: 900 }}>{city1.city}</th>
-                            <th style={{ padding: '2rem', textAlign: 'center', fontSize: '1.5rem', fontWeight: 900 }}>{city2.city}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {comparisonMetrics.map((metric, idx) => {
-                            const raw1 = (city1 as any)[metric.key];
-                            const raw2 = (city2 as any)[metric.key];
-                            const val1 = metric.isPrice ? formatValue(raw1 * (metric.factor || 1)) : raw1;
-                            const val2 = metric.isPrice ? formatValue(raw2 * (metric.factor || 1)) : raw2;
+            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
+                {/* Metric Labels Column */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'center', paddingRight: '2rem' }}>
+                    {comparisonMetrics.map((metric) => (
+                        <div key={metric.label}>
+                            <div style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                {metric.label}
+                            </div>
+                        </div>
+                    ))}
+                </div>
 
-                            const isHigherBetter = ['safety', 'internet', 'healthcare', 'cost_index'].includes(metric.key);
-                            const winner = isHigherBetter ? (raw1 > raw2 ? 1 : 2) : (raw1 < raw2 ? 1 : 2);
-
+                {/* City 1 Column */}
+                <div className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', border: '2px solid var(--primary-glow)' }}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '2.5rem' }}>{city1.city}</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                        {comparisonMetrics.map((metric) => {
+                            const raw = (city1 as any)[metric.key];
+                            const val = metric.isPrice ? formatValue(raw * (metric.factor || 1)) : raw;
                             return (
-                                <tr key={metric.label} style={{ borderBottom: '1px solid var(--border)', backgroundColor: idx % 2 === 0 ? 'transparent' : '#f8fafc' }}>
-                                    <td style={{ padding: '1.5rem 2rem', fontWeight: 700, color: 'var(--muted)' }}>{metric.label}</td>
-                                    <td style={{
-                                        padding: '1.5rem 2rem',
-                                        textAlign: 'center',
-                                        fontSize: '1.25rem',
-                                        fontWeight: 800,
-                                        color: winner === 1 ? 'var(--primary)' : 'var(--foreground)',
-                                        backgroundColor: winner === 1 ? 'rgba(79, 70, 229, 0.03)' : 'transparent'
-                                    }}>
-                                        {val1}
-                                        {winner === 1 && <span style={{ marginLeft: '0.5rem', color: 'var(--secondary)' }}>★</span>}
-                                    </td>
-                                    <td style={{
-                                        padding: '1.5rem 2rem',
-                                        textAlign: 'center',
-                                        fontSize: '1.25rem',
-                                        fontWeight: 800,
-                                        color: winner === 2 ? 'var(--primary)' : 'var(--foreground)',
-                                        backgroundColor: winner === 2 ? 'rgba(79, 70, 229, 0.03)' : 'transparent'
-                                    }}>
-                                        {val2}
-                                        {winner === 2 && <span style={{ marginLeft: '0.5rem', color: 'var(--secondary)' }}>★</span>}
-                                    </td>
-                                </tr>
+                                <div key={metric.label}>
+                                    <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--primary)' }}>{val}</div>
+                                    <div style={{ height: '6px', background: 'var(--muted-light)', borderRadius: '10px', marginTop: '0.5rem', overflow: 'hidden' }}>
+                                        <div style={{ height: '100%', width: `${Math.min(100, (raw / 100) * 100)}%`, background: 'var(--primary)', borderRadius: '10px' }} />
+                                    </div>
+                                </div>
                             );
                         })}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
+
+                {/* City 2 Column */}
+                <div className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '2.5rem' }}>{city2.city}</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                        {comparisonMetrics.map((metric) => {
+                            const raw = (city2 as any)[metric.key];
+                            const val = metric.isPrice ? formatValue(raw * (metric.factor || 1)) : raw;
+                            return (
+                                <div key={metric.label}>
+                                    <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--primary)' }}>{val}</div>
+                                    <div style={{ height: '6px', background: 'var(--muted-light)', borderRadius: '10px', marginTop: '0.5rem', overflow: 'hidden' }}>
+                                        <div style={{ height: '100%', width: `${Math.min(100, (raw / 100) * 100)}%`, background: 'var(--primary)', borderRadius: '10px' }} />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
 
-            <div style={{ marginTop: '5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
-                <CityCard city={city1} />
-                <CityCard city={city2} />
+            <div style={{ marginTop: '6rem', display: 'flex', justifyContent: 'center', gap: '3rem' }}>
+                <div style={{ width: '400px' }}><CityCard city={city1} /></div>
+                <div style={{ width: '400px' }}><CityCard city={city2} /></div>
             </div>
 
             <div style={{ textAlign: 'center', marginTop: '4rem' }}>
