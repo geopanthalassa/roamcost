@@ -5,6 +5,8 @@ import HomeClient from '@/components/HomeClient';
 
 export const revalidate = 3600; // Revalidate every hour
 
+throw new Error("PROBANDO CAMBIOS ANTIGRAVITY - SI VES ESTO, ESTOY EDITANDO EL ARCHIVO CORRECTO");
+
 export default async function Home() {
   // Fetch featured data for the homepage - Filtering for prominent cities with complete data
   const { data: featuredCities } = await supabase
