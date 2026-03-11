@@ -1,15 +1,7 @@
 import Link from 'next/link';
-import SearchBar from '@/components/SearchBar';
-import CityCard from '@/components/CityCard';
 import { supabase } from '@/lib/supabase';
 import { City } from '@/types/database';
-import dynamic from 'next/dynamic';
 import HomeClient from '@/components/HomeClient';
-
-const WorldMap = dynamic(() => import('@/components/WorldMap'), {
-  ssr: false,
-  loading: () => <div style={{ height: '600px', backgroundColor: 'var(--muted-light)', borderRadius: 'var(--radius-xl)' }} />
-});
 
 export const revalidate = 3600; // Revalidate every hour
 
