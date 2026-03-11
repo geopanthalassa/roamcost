@@ -31,7 +31,7 @@ export default function ComparePage({ params }: ComparePageProps) {
                 .from('cities_master')
                 .select('*')
                 .in('slug', [slug1, slug2]);
-            setCities((data as City[]) || []);
+            setCities((data as any as City[]) || []);
             setLoading(false);
         };
         fetchData();

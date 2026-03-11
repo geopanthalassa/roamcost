@@ -27,7 +27,7 @@ export default function CityPage({ params }: CityPageProps) {
                 .select('*')
                 .eq('slug', resolvedParams.slug)
                 .single();
-            setCity(data as City);
+            setCity(data as any as City);
             setLoading(false);
         };
         fetchData();
