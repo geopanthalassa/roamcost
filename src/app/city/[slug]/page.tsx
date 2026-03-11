@@ -85,7 +85,7 @@ export default function CityPage({ params }: CityPageProps) {
                         <span style={{ backgroundColor: 'var(--secondary)', color: 'var(--foreground)', padding: '0.75rem 1.5rem', borderRadius: '1rem', fontWeight: 900, fontSize: '1.1rem' }}>
                             Quality Score: {city.cost_index}
                         </span>
-                        <WeatherWidget lat={city.lat} lon={city.lng} />
+                        <WeatherWidget lat={city.lat} lng={city.lng} cityName={city.city} />
                     </div>
                 </div>
             </div>
