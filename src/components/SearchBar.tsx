@@ -51,15 +51,18 @@ export default function SearchBar({ persona = 'nomad' }: SearchBarProps) {
                     left: '1.5rem',
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    fontSize: '1.5rem',
                     pointerEvents: 'none',
-                    opacity: 0.8
+                    opacity: 0.6,
+                    display: 'flex',
+                    alignItems: 'center'
                 }}>
-                    {persona === 'nomad' ? '✈️' : '🏠'}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
                 </span>
                 <input
                     type="text"
-                    placeholder={persona === 'nomad' ? "Find your next coworking paradise..." : "Find the perfect family home..."}
+                    placeholder={persona === 'nomad' ? "Search for your next professional base..." : "Find the perfect family relocation hub..."}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -77,8 +80,14 @@ export default function SearchBar({ persona = 'nomad' }: SearchBarProps) {
                         outline: 'none',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}
-                    onFocus={(e) => e.currentTarget.style.boxShadow = 'var(--shadow-xl)'}
-                    onBlur={(e) => e.currentTarget.style.boxShadow = 'var(--glass-shadow)'}
+                    onFocus={(e) => {
+                        e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
+                        e.currentTarget.style.borderColor = 'var(--primary)';
+                    }}
+                    onBlur={(e) => {
+                        e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
+                        e.currentTarget.style.borderColor = 'var(--glass-border)';
+                    }}
                 />
             </div>
 
@@ -123,7 +132,9 @@ export default function SearchBar({ persona = 'nomad' }: SearchBarProps) {
                             }}
                         >
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                <span style={{ fontSize: '1.5rem' }}>📍</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary)', opacity: 0.7 }}>
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                                </svg>
                                 <div>
                                     <div style={{ fontWeight: 800, fontSize: '1.1rem' }}>{city.city}</div>
                                     <div style={{ color: 'var(--muted)', fontSize: '0.875rem', fontWeight: 600 }}>{city.country}</div>
@@ -135,7 +146,8 @@ export default function SearchBar({ persona = 'nomad' }: SearchBarProps) {
                                 borderRadius: 'var(--radius-sm)',
                                 fontWeight: 800,
                                 color: 'var(--primary)',
-                                boxShadow: 'var(--shadow-sm)'
+                                boxShadow: 'var(--shadow-sm)',
+                                fontSize: '0.875rem'
                             }}>
                                 Score: {city.cost_index}
                             </div>

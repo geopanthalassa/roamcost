@@ -36,6 +36,8 @@ export default function CompareLandingPage() {
             .from('cities_master')
             .select('*')
             .ilike('city', `%${query}%`)
+            .gt('population', 300000)
+            .order('population', { ascending: false })
             .limit(5);
         setter((data as City[]) || []);
     };

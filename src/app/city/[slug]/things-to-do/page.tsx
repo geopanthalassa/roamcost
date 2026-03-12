@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
-
+import Link from 'next/link';
 import { City } from '@/types/database';
 
 interface ThingsToDoProps {
@@ -47,31 +47,32 @@ export default async function ThingsToDoPage({ params }: ThingsToDoProps) {
 
     return (
         <div className="container section animate-fade-in">
-            <div style={{ marginBottom: '3rem' }}>
-                <h1 style={{ marginBottom: '0.5rem' }}>Things to do in {city.city}</h1>
-                <p style={{ color: 'var(--muted)', fontSize: '1.25rem' }}>Discover the best attractions and landmarks in {city.city}, {city.country}.</p>
+            <div style={{ marginBottom: '5rem', textAlign: 'center' }}>
+                <span style={{ color: 'var(--primary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem' }}>Local Experiences</span>
+                <h1 style={{ marginTop: '0.5rem', fontSize: '3.5rem', fontWeight: 900, letterSpacing: '-0.04em' }}>Explore {city.city}</h1>
+                <p style={{ color: 'var(--muted)', fontSize: '1.25rem', fontWeight: 500, maxWidth: '600px', margin: '0.75rem auto 0' }}>Discover the most significant landmarks and cultural hubs in {city.city}.</p>
             </div>
 
             {places.length === 0 ? (
-                <div className="card" style={{ textAlign: 'center', padding: '4rem' }}>
-                    <p>We couldn't find any specific places for this area right now. Try exploring the city center!</p>
+                <div className="card" style={{ textAlign: 'center', padding: '5rem', borderRadius: 'var(--radius-xl)' }}>
+                    <p style={{ color: 'var(--muted)', fontSize: '1.1rem' }}>We couldn't find any specific landmarks for this area right now. Try exploring the central district.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-3" style={{ gap: '2.5rem' }}>
                     {places.map((place: any) => (
-                        <div key={place.fsq_id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <div>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
+                        <div key={place.fsq_id} className="card" style={{ display: 'flex', flexDirection: 'column', padding: '2.5rem', borderRadius: 'var(--radius-lg)', border: 'none', boxShadow: 'var(--shadow-md)' }}>
+                            <div style={{ marginBottom: '1.5rem' }}>
+                                <div style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
                                     {place.categories?.[0]?.name || 'Attraction'}
                                 </div>
-                                <h3 style={{ margin: 0, fontSize: '1.25rem' }}>{place.name}</h3>
+                                <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800 }}>{place.name}</h3>
                             </div>
-                            <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--muted)' }}>
-                                {place.location?.address || 'City Center'}
+                            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--muted)', fontWeight: 500 }}>
+                                {place.location?.address || 'Central District'}
                             </p>
-                            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem' }}>
-                                <span style={{ fontSize: '0.75rem', backgroundColor: 'var(--border)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
-                                    {Math.round(place.distance / 100) / 10} km from center
+                            <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-start' }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 700, backgroundColor: 'var(--muted-light)', color: 'var(--muted)', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    {Math.round(place.distance / 100) / 10} km from origin
                                 </span>
                             </div>
                         </div>
@@ -79,13 +80,11 @@ export default async function ThingsToDoPage({ params }: ThingsToDoProps) {
                 </div>
             )}
 
-            <div style={{ marginTop: '4rem', textAlign: 'center' }}>
-                <Link href={`/city/${city.slug}`} className="btn btn-primary">
-                    Back to {city.city} Overview
+            <div style={{ marginTop: '6rem', textAlign: 'center' }}>
+                <Link href={`/city/${city.slug}`} className="btn" style={{ padding: '1rem 3rem', background: 'var(--primary)', color: 'white', fontWeight: 800, borderRadius: 'var(--radius-md)' }}>
+                    Return to Overview
                 </Link>
             </div>
         </div>
     );
 }
-
-import Link from 'next/link';

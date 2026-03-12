@@ -67,7 +67,7 @@ export default function HomeClient({
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                             }}
                         >
-                            🚀 Digital Nomad
+                            Digital Nomad
                         </button>
                         <button
                             onClick={() => setPersona('family')}
@@ -81,18 +81,18 @@ export default function HomeClient({
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                             }}
                         >
-                            👨‍👩‍👧‍👦 Family
+                            Family
                         </button>
                     </div>
 
                     <h1 style={{ fontSize: '5rem', marginBottom: '1.5rem', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.06em' }}>
-                        Roam the world, <br />
+                        Explore the world, <br />
                         <span style={{ color: 'var(--secondary)' }}>Smarter.</span>
                     </h1>
                     <p style={{ fontSize: '1.5rem', color: 'rgba(255, 255, 255, 0.85)', marginBottom: '4rem', maxWidth: '800px', margin: '0 auto 4rem', fontWeight: 500 }}>
                         {persona === 'nomad'
-                            ? "Optimize your budget based on coworking, wifi speed, and living costs."
-                            : "Find the perfect place for your family with school, safety, and grocery data."
+                            ? "Comprehensive data for professionals seeking their next base."
+                            : "Reliable insights for families planning their next relocation."
                         }
                     </p>
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
@@ -106,7 +106,7 @@ export default function HomeClient({
                 {/* Map Section */}
                 <section className="container" style={{ marginBottom: '6rem' }}>
                     <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                        <span style={{ color: 'var(--primary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem' }}>Global Trends</span>
+                        <span style={{ color: 'var(--primary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem' }}>Global Insights</span>
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginTop: '0.5rem' }}>Interactive Hub Explorer</h2>
                     </div>
                     <WorldMap cities={mapCities} />
@@ -117,13 +117,13 @@ export default function HomeClient({
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem' }}>
                         <div>
                             <h2 style={{ fontSize: '2.25rem', fontWeight: 900, marginBottom: '0.5rem' }}>
-                                {persona === 'nomad' ? 'Nomad Favorites' : 'Top Family Hubs'}
+                                {persona === 'nomad' ? 'Premier Nomad Hubs' : 'Top Family Destinations'}
                             </h2>
                             <p style={{ color: 'var(--muted)', fontSize: '1.125rem' }}>
-                                High-quality hubs with stable infrastructure and great scores.
+                                Recognizing the highest-quality destinations with stable infrastructure.
                             </p>
                         </div>
-                        <Link href="/rankings/quality" style={{ color: 'var(--primary)', fontWeight: 800, fontSize: '1rem' }}>Explore All Hubs →</Link>
+                        <Link href="/rankings/quality" style={{ color: 'var(--primary)', fontWeight: 800, fontSize: '1rem' }}>Global Rankings →</Link>
                     </div>
                     <div className="grid grid-cols-4">
                         {(persona === 'nomad' ? topNomadCities : featuredCities).map(city => (
@@ -136,24 +136,21 @@ export default function HomeClient({
                 <section style={{ background: 'var(--accent)', padding: '8rem 0', borderRadius: 'var(--radius-xl)' }}>
                     <div className="container">
                         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: 900 }}>Curated Rankings</h2>
-                            <p style={{ color: 'var(--muted)', fontSize: '1.25rem' }}>Find exactly what suits your lifestyle.</p>
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 900 }}>Curated Insights</h2>
+                            <p style={{ color: 'var(--muted)', fontSize: '1.25rem' }}>Select the criteria that matters most to you.</p>
                         </div>
                         <div className="grid grid-cols-3">
                             <Link href="/rankings/safest" className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)' }}>
-                                <div style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>🛡️</div>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Safety First</h3>
-                                <p style={{ color: 'var(--muted)', marginBottom: 0 }}>Secure cities for peaceful living and solo travel.</p>
+                                <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Safety Standards</h3>
+                                <p style={{ color: 'var(--muted)', marginBottom: 0 }}>Secure cities analyzed by crime rates and stability.</p>
                             </Link>
                             <Link href="/rankings/cheapest" className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)' }}>
-                                <div style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>💰</div>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Budget Friendly</h3>
-                                <p style={{ color: 'var(--muted)', marginBottom: 0 }}>Extend your runway in beautiful, affordable locales.</p>
+                                <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Yield & Value</h3>
+                                <p style={{ color: 'var(--muted)', marginBottom: 0 }}>Optimize your runway in high-value global locales.</p>
                             </Link>
                             <Link href="/compare" className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', background: 'var(--primary)', color: 'white' }}>
-                                <div style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>⚖️</div>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Side-by-Side</h3>
-                                <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: 0 }}>Compare specific cities with detailed FinTech-style cards.</p>
+                                <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Side-by-Side Analysis</h3>
+                                <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: 0 }}>Directly compare specific cities with detailed data cards.</p>
                             </Link>
                         </div>
                     </div>

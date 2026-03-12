@@ -31,9 +31,10 @@ export default async function BestCitiesInRegionPage({ params }: RegionalPagePro
 
     return (
         <div className="container section animate-fade-in">
-            <div style={{ marginBottom: '4rem', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏆 Best Cities in {regionName}</h1>
-                <p style={{ color: 'var(--muted)', fontSize: '1.25rem' }}>Top rated destinations in {regionName} based on quality of life and infrastructure.</p>
+            <div style={{ marginBottom: '5rem', textAlign: 'center' }}>
+                <span style={{ color: 'var(--primary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem' }}>Top Rankings</span>
+                <h1 style={{ fontSize: '3.5rem', marginTop: '0.5rem', fontWeight: 900, letterSpacing: '-0.04em' }}>Leading Cities in {regionName}</h1>
+                <p style={{ color: 'var(--muted)', fontSize: '1.25rem', fontWeight: 500, maxWidth: '700px', margin: '0.75rem auto 0' }}>Comprehensive data on lifestyle standards and infrastructure in {regionName}.</p>
             </div>
 
             <div className="grid grid-cols-4">

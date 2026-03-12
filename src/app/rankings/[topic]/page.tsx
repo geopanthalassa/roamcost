@@ -28,26 +28,26 @@ export default async function RankingPage({ params }: RankingPageProps) {
     const { topic } = await params;
     if (!topic) return notFound();
 
-    let query = supabase.from('cities_master').select('*').limit(50);
+    let query = supabase.from('cities_master').select('*').gt('population', 500000).limit(50);
     let title = 'City Rankings';
     let description = 'Discover top destinations based on your preferences.';
 
     if (topic === 'cheapest') {
-        query = query.order('rent_index', { ascending: true });
+        query = query.gt('rent_index', 0).order('rent_index', { ascending: true });
         title = 'Cheapest Cities to Live';
-        description = 'Where your monthly budget goes the furthest.';
+        description = 'Recognizable global hubs where your budget goes the furthest.';
     } else if (topic === 'nomads') {
-        query = query.order('internet', { ascending: false });
+        query = query.gt('internet', 0).order('population', { ascending: false }); // Prioritize known cities
         title = 'Best for Digital Nomads';
-        description = 'High-speed internet and high nomad quality scores.';
+        description = 'High-speed professional hubs for remote work.';
     } else if (topic === 'safest') {
         query = query.order('safety', { ascending: false });
         title = 'Safest Cities Globally';
-        description = 'Top destinations with the lowest crime rates.';
+        description = 'Top destinations with the highest safety standards.';
     } else if (topic === 'quality') {
-        query = query.order('cost_index', { ascending: false });
+        query = query.gt('cost_index', 0).order('population', { ascending: false });
         title = 'Highest Quality of Life';
-        description = 'The ultimate balance of amenities and environment.';
+        description = 'Premium global destinations with superior amenities.';
     }
 
     const { data: cities } = await query as unknown as { data: City[] };

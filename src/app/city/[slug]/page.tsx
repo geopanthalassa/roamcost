@@ -44,13 +44,13 @@ export default function CityPage({ params }: CityPageProps) {
     ];
 
     const qualityMetrics = [
-        { label: 'Safety', value: city.safety },
-        { label: 'Healthcare', value: city.healthcare },
-        { label: 'Internet', value: city.internet },
-        { label: 'Environment', value: city.environment },
+        { label: 'Safety Index', value: city.safety },
+        { label: 'Healthcare Quality', value: city.healthcare },
+        { label: 'Connectivity', value: city.internet },
+        { label: 'Environment Score', value: city.environment },
     ];
 
-    const dynamicImage = `https://source.unsplash.com/featured/1200x600?${encodeURIComponent(city.city)},cityscape`;
+    const dynamicImage = `https://source.unsplash.com/featured/1200x600?${encodeURIComponent(city.city)},${encodeURIComponent(city.country)},landmark`;
 
     return (
         <div className="city-page container section animate-fade-in">
@@ -73,17 +73,16 @@ export default function CityPage({ params }: CityPageProps) {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundImage: `url(${dynamicImage}), url(https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1200)`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,0.7)), url(${dynamicImage}), url(https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1200)`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'brightness(0.5)'
                 }} />
                 <div style={{ position: 'relative', zIndex: 1, color: 'white' }}>
                     <h1 style={{ marginBottom: '0.75rem', fontSize: '5rem', fontWeight: 900, letterSpacing: '-0.05em' }}>{city.city}</h1>
-                    <p style={{ fontSize: '1.75rem', opacity: 0.9, fontWeight: 600 }}>{city.country} • {city.population.toLocaleString()} inhabitants</p>
-                    <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1.25rem' }}>
-                        <span style={{ backgroundColor: 'var(--secondary)', color: 'var(--foreground)', padding: '0.75rem 1.5rem', borderRadius: '1rem', fontWeight: 900, fontSize: '1.1rem' }}>
-                            Quality Score: {city.cost_index}
+                    <p style={{ fontSize: '1.5rem', opacity: 0.9, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{city.country} • {city.population.toLocaleString()} Residents</p>
+                    <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                        <span style={{ backgroundColor: 'var(--secondary)', color: 'var(--foreground)', padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-md)', fontWeight: 900, fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Quality Index: {city.cost_index}
                         </span>
                         <WeatherWidget lat={city.lat} lng={city.lng} cityName={city.city} />
                     </div>
@@ -92,23 +91,23 @@ export default function CityPage({ params }: CityPageProps) {
 
             <div className="grid grid-cols-2" style={{ gap: '3rem' }}>
                 {/* Cost Section */}
-                <section className="card" style={{ padding: '3rem' }}>
-                    <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'var(--primary)', fontWeight: 800 }}>
-                        Living Costs
+                <section className="card" style={{ padding: '3rem', border: 'none', boxShadow: 'var(--shadow-md)' }}>
+                    <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'var(--primary)', fontWeight: 900, letterSpacing: '-0.02em' }}>
+                        Financial Requirements
                     </h2>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                         {costMetrics.map((metric) => (
                             <div key={metric.label}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontWeight: 700 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                                     <span style={{ color: 'var(--muted)' }}>{metric.label}</span>
-                                    <span style={{ color: 'var(--foreground)', fontSize: '1.1rem' }}>{formatValue(metric.value * metric.factor)}</span>
+                                    <span style={{ color: 'var(--primary)', fontSize: '1.2rem' }}>{formatValue(metric.value * metric.factor)}</span>
                                 </div>
-                                <div style={{ height: '12px', backgroundColor: '#f1f5f9', borderRadius: '6px', overflow: 'hidden' }}>
+                                <div style={{ height: '8px', backgroundColor: 'var(--muted-light)', borderRadius: '10px', overflow: 'hidden' }}>
                                     <div style={{
                                         height: '100%',
                                         width: `${Math.min(metric.value, 100)}%`,
-                                        backgroundColor: metric.color,
-                                        borderRadius: '6px'
+                                        background: `linear-gradient(90deg, ${metric.color} 0%, var(--secondary) 100%)`,
+                                        borderRadius: '10px'
                                     }} />
                                 </div>
                             </div>
@@ -117,9 +116,9 @@ export default function CityPage({ params }: CityPageProps) {
                 </section>
 
                 {/* Quality Section */}
-                <section className="card" style={{ padding: '3rem' }}>
-                    <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'var(--primary)', fontWeight: 800 }}>
-                        Lifestyle Quality
+                <section className="card" style={{ padding: '3rem', border: 'none', boxShadow: 'var(--shadow-md)' }}>
+                    <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'var(--primary)', fontWeight: 900, letterSpacing: '-0.02em' }}>
+                        Infrastructure Quality
                     </h2>
                     <div style={{
                         display: 'grid',
@@ -127,16 +126,16 @@ export default function CityPage({ params }: CityPageProps) {
                         gap: '1.5rem'
                     }}>
                         {qualityMetrics.map((metric) => (
-                            <div key={metric.label} style={{ textAlign: 'center', padding: '1.5rem', backgroundColor: '#fbfbff', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)' }}>
-                                <div style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--secondary)', marginBottom: '0.25rem' }}>{metric.value}</div>
-                                <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{metric.label}</div>
+                            <div key={metric.label} style={{ textAlign: 'center', padding: '2rem', backgroundColor: 'var(--muted-light)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
+                                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '0.25rem', letterSpacing: '-0.04em' }}>{metric.value}</div>
+                                <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{metric.label}</div>
                             </div>
                         ))}
                     </div>
 
                     <div style={{ marginTop: '3rem' }}>
-                        <Link href={`/city/${city.slug}/things-to-do`} className="btn btn-primary" style={{ width: '100%', padding: '1.25rem' }}>
-                            View Local Experiences →
+                        <Link href={`/city/${city.slug}/things-to-do`} className="btn" style={{ width: '100%', padding: '1.5rem', background: 'var(--primary)', color: 'white', fontWeight: 800, borderRadius: 'var(--radius-md)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Local Experiences Breakdown
                         </Link>
                     </div>
                 </section>

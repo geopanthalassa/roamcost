@@ -35,13 +35,24 @@ function generateSiteMap(cities: any[]) {
 }
 
 export async function GET() {
-  // We fetch only slugs to keep the memory footprint low
-  const { data: cities } = await supabase
-    .from('cities_master')
-    .select('slug, city, country')
-    .limit(40000); // Sitemaps have a 50k URL limit per file
+  const routes = [
+    '',
+    '/rankings/cheapest',
+    '/rankings/nomads',
+    '/rankings/safest',
+    '/rankings/quality',
+    '/compare',
+  ];
 
-  const sitemap = generateSiteMap(cities || []);
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+     ${routes.map(route => `
+       <url>
+         <loc>${EXTERNAL_DATA_URL}${route}</loc>
+       </url>
+     `).join('')}
+   </urlset>
+  `;
 
   return new Response(sitemap, {
     headers: {

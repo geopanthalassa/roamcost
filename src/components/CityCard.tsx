@@ -12,21 +12,21 @@ interface CityCardProps {
 export default function CityCard({ city, persona = 'nomad' }: CityCardProps) {
     const { formatValue } = useCurrency();
 
-    // High-fidelity image system with per-city seeding
-    const cityImage = `https://source.unsplash.com/featured/800x600?${encodeURIComponent(city.city)},cityscape&sig=${city.slug}`;
+    // High-fidelity image system with refined geography-aware query
+    const cityImage = `https://source.unsplash.com/featured/800x600?${encodeURIComponent(city.city)},${encodeURIComponent(city.country)},landscape&sig=${city.slug}`;
     const fallbackImage = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80`;
 
-    // Define metrics based on persona
+    // Define metrics based on persona - professional terminology
     const metrics = persona === 'nomad'
         ? [
-            { label: 'Internet', value: city.internet, max: 100, unit: 'Mbps' },
-            { label: 'Rent', value: city.rent_index, max: 100, unit: '' },
-            { label: 'Safety', value: city.safety, max: 100, unit: '%' }
+            { label: 'Connectivity', value: city.internet, max: 100, unit: 'Mbps' },
+            { label: 'Market Rent', value: city.rent_index, max: 100, unit: '' },
+            { label: 'Safety Index', value: city.safety, max: 100, unit: '%' }
         ]
         : [
-            { label: 'Safety', value: city.safety, max: 100, unit: '%' },
-            { label: 'Healthcare', value: city.healthcare || 70, max: 100, unit: '%' },
-            { label: 'Environment', value: city.environment || 65, max: 100, unit: '%' }
+            { label: 'Safety Index', value: city.safety, max: 100, unit: '%' },
+            { label: 'Healthcare Quality', value: city.healthcare || 70, max: 100, unit: '%' },
+            { label: 'Environment Score', value: city.environment || 65, max: 100, unit: '%' }
         ];
 
     return (
@@ -41,12 +41,12 @@ export default function CityCard({ city, persona = 'nomad' }: CityCardProps) {
             borderRadius: 'var(--radius-lg)',
             transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease',
         }}>
-            {/* Image Overlay with Score Badge */}
+            {/* Image Overlay with Professional Indicator */}
             <div style={{ position: 'relative', height: '220px' }}>
                 <div style={{
                     height: '100%',
                     backgroundColor: 'var(--primary-glow)',
-                    backgroundImage: `url(${cityImage}), url(${fallbackImage})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0) 60%, rgba(0,0,0,0.4)), url(${cityImage}), url(${fallbackImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }} />
@@ -59,35 +59,37 @@ export default function CityCard({ city, persona = 'nomad' }: CityCardProps) {
                     padding: '0.5rem 1rem',
                     borderRadius: 'var(--radius-md)',
                     fontWeight: 900,
-                    fontSize: '1rem',
+                    fontSize: '0.875rem',
                     boxShadow: 'var(--shadow-md)',
-                    zIndex: 2
+                    zIndex: 2,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
                 }}>
-                    {city.cost_index}
+                    SCORE {city.cost_index}
                 </div>
             </div>
 
             <div style={{ padding: '2rem' }}>
                 <div style={{ marginBottom: '1.5rem' }}>
                     <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 900, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>{city.city}</h3>
-                    <p style={{ margin: 0, color: 'var(--muted)', fontSize: '1rem', fontWeight: 600 }}>{city.country}</p>
+                    <p style={{ margin: 0, color: 'var(--muted)', fontSize: '0.9rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{city.country}</p>
                 </div>
 
-                {/* Progress Bar Metrics */}
+                {/* Progress Bar Metrics - Sleek FinTech Style */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.5rem' }}>
                     {metrics.map((m) => (
                         <div key={m.label}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)' }}>
                                 <span>{m.label}</span>
                                 <span style={{ color: 'var(--primary)' }}>{m.value}{m.unit}</span>
                             </div>
-                            <div style={{ height: '6px', background: 'var(--muted-light)', borderRadius: '10px', overflow: 'hidden' }}>
+                            <div style={{ height: '4px', background: 'var(--muted-light)', borderRadius: '10px', overflow: 'hidden' }}>
                                 <div style={{
                                     height: '100%',
                                     width: `${Math.min(100, (m.value / m.max) * 100)}%`,
-                                    background: 'var(--primary)',
+                                    background: 'linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%)',
                                     borderRadius: '10px',
-                                    transition: 'width 1s ease-out'
+                                    transition: 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)'
                                 }} />
                             </div>
                         </div>
@@ -102,8 +104,8 @@ export default function CityCard({ city, persona = 'nomad' }: CityCardProps) {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--muted)' }}>Est. Monthly</span>
-                    <span style={{ fontSize: '1.125rem', fontWeight: 900, color: 'var(--primary)' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>EST. MONTHLY</span>
+                    <span style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.02em' }}>
                         {formatValue(city.cost_index * 30)}
                     </span>
                 </div>

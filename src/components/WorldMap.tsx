@@ -6,14 +6,24 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import L from 'leaflet';
 
-// Fix for default marker icons in Leaflet + Next.js
-const DefaultIcon = L.icon({
-    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+// Fix for default marker icons in Leaflet + Next.js using DivIcon for stability and custom look
+const createCustomIcon = (costIndex: number) => {
+    // Determine color based on cost index (Cyan for low, Indigo for high)
+    const color = costIndex > 50 ? '#2A41CB' : '#00D1FF';
+    return L.divIcon({
+        className: 'custom-map-marker',
+        html: `<div style="
+            background-color: ${color};
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        "></div>`,
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+    });
+};
 
 interface MapCity {
     city: string;
@@ -36,7 +46,7 @@ export default function WorldMap({ cities }: WorldMapProps) {
     }, []);
 
     if (!isMounted) {
-        return <div style={{ height: '500px', backgroundColor: 'var(--muted-light)', borderRadius: 'var(--radius-xl)' }} />;
+        return <div style={{ height: '600px', backgroundColor: 'var(--muted-light)', borderRadius: 'var(--radius-xl)' }} />;
     }
 
     return (
@@ -52,15 +62,32 @@ export default function WorldMap({ cities }: WorldMapProps) {
                     url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                 />
                 {cities.map((city) => (
-                    <Marker key={city.slug} position={[city.lat, city.lng] as any}>
+                    <Marker
+                        key={city.slug}
+                        position={[city.lat, city.lng] as any}
+                        icon={createCustomIcon(city.cost_index)}
+                    >
                         <Popup>
-                            <div style={{ padding: '0.5rem', minWidth: '150px' }}>
-                                <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem', fontWeight: 800 }}>{city.city}</h3>
-                                <p style={{ margin: '0 0 1rem 0', color: 'var(--muted)', fontSize: '0.875rem' }}>{city.country}</p>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <span style={{ fontWeight: 700, color: 'var(--primary)' }}>Score: {city.cost_index}</span>
-                                    <Link href={`/city/${city.slug}`} className="btn btn-primary" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', borderRadius: '4px' }}>
-                                        View →
+                            <div style={{ padding: '0.5rem', minWidth: '160px', fontFamily: "'Inter', sans-serif" }}>
+                                <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem', fontWeight: 900, color: 'var(--headline)' }}>{city.city}</h3>
+                                <p style={{ margin: '0 0 0.75rem 0', color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{city.country}</p>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border)' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase' }}>Score</span>
+                                        <span style={{ fontWeight: 900, color: 'var(--primary)', fontSize: '1rem' }}>{city.cost_index}</span>
+                                    </div>
+                                    <Link
+                                        href={`/city/${city.slug}`}
+                                        style={{
+                                            backgroundColor: 'var(--primary)',
+                                            color: 'white',
+                                            padding: '0.4rem 0.8rem',
+                                            fontSize: '0.75rem',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontWeight: 700
+                                        }}
+                                    >
+                                        Explore
                                     </Link>
                                 </div>
                             </div>
