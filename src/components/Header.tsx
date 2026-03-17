@@ -24,10 +24,18 @@ export default function Header() {
                     alignItems: 'center',
                     gap: '0.5rem'
                 }}>
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        {/* Globe Base */}
+                        <circle cx="11" cy="13" r="8" />
+                        <path d="M11 5c2.5 0 4.5 3.5 4.5 8s-2 8-4.5 8-4.5-3.5-4.5-8 2-8 4.5-8z" />
+                        <path d="M3 13h16" />
+                        {/* Orbital Airplane */}
+                        <path d="M18.5 4.5L22 2l-1.5 3.5-2 1z" fill="var(--primary)" stroke="none" />
+                        <path d="M20 4A11 11 0 0 0 2 16" strokeDasharray="3 3" opacity="0.6" />
                     </svg>
-                    Roam<span style={{ color: 'var(--primary)' }}>Cost</span>
+                    <span style={{ fontFamily: 'var(--font-inter, sans-serif)', letterSpacing: '-0.03em' }}>
+                        Roam<span style={{ color: 'var(--primary)' }}>Cost</span>
+                    </span>
                 </Link>
 
                 <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>

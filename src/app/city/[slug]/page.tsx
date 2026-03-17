@@ -10,6 +10,8 @@ import React, { useEffect, useState, use } from 'react';
 import CostBreakdownChart from '@/components/CostBreakdownChart';
 import QualityScoreChart from '@/components/QualityScoreChart';
 
+import Image from 'next/image';
+
 interface CityPageProps {
     params: Promise<{
         slug: string;
@@ -28,8 +30,9 @@ export default function CityPage({ params }: CityPageProps) {
                 .from('cities_master')
                 .select('*')
                 .eq('slug', resolvedParams.slug)
-                .single();
-            setCity(data as any as City);
+                .order('population', { ascending: false })
+                .limit(1);
+            setCity((data && data.length > 0) ? (data[0] as any as City) : null);
             setLoading(false);
         };
         fetchData();
@@ -39,6 +42,7 @@ export default function CityPage({ params }: CityPageProps) {
     if (!city) notFound();
 
     const dynamicImage = `https://source.unsplash.com/featured/1600x900?${encodeURIComponent(city.city)}+skyline`;
+    const fallbackImage = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1200`;
 
     return (
         <div className="city-page container section animate-fade-in">
@@ -61,10 +65,24 @@ export default function CityPage({ params }: CityPageProps) {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0) 40%, rgba(34,34,34,0.85)), url(${dynamicImage}), url(https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1200)`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }} />
+                    zIndex: 0
+                }}>
+                    <Image
+                        src={dynamicImage}
+                        alt={`${city.city} skyline`}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        priority
+                        onError={(e) => {
+                            e.currentTarget.src = fallbackImage;
+                        }}
+                    />
+                    <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: 'linear-gradient(rgba(0,0,0,0) 40%, rgba(34,34,34,0.85))'
+                    }} />
+                </div>
                 <div style={{ position: 'relative', zIndex: 1, color: 'white' }}>
                     <h1 style={{ marginBottom: '0.75rem', fontSize: '5rem', fontWeight: 900, letterSpacing: '-0.05em' }}>{city.city}</h1>
                     <p style={{ fontSize: '1.5rem', opacity: 0.9, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{city.country} • {city.population.toLocaleString()} Residents</p>

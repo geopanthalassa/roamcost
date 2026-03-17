@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
 import { City } from '@/types/database';
 import { useCurrency } from '@/context/CurrencyContext';
 
@@ -11,9 +13,8 @@ interface CityCardProps {
 
 export default function CityCard({ city, persona = 'nomad' }: CityCardProps) {
     const { formatValue } = useCurrency();
+    const [imgSrc, setImgSrc] = useState(`https://source.unsplash.com/800x600/?${encodeURIComponent(city.city)}+skyline`);
 
-    // Unsplash skyline implementation
-    const cityImage = `https://source.unsplash.com/1600x900/?${encodeURIComponent(city.city)}+skyline`;
     const fallbackImage = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80`;
 
     // Define metrics based on persona
@@ -48,14 +49,23 @@ export default function CityCard({ city, persona = 'nomad' }: CityCardProps) {
                 e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
             }}>
             {/* Image Overlay */}
-            <div style={{ position: 'relative', height: '200px' }}>
+            <div style={{ position: 'relative', height: '200px', width: '100%', overflow: 'hidden' }}>
+                <Image
+                    src={imgSrc}
+                    alt={`${city.city} skyline`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    style={{ objectFit: 'cover' }}
+                    onError={() => setImgSrc(fallbackImage)}
+                    priority={false}
+                />
                 <div style={{
-                    height: '100%',
-                    backgroundColor: 'var(--muted-light)',
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.6)), url(${cityImage}), url(${fallbackImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: 'linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.6))',
+                    zIndex: 1
                 }} />
+
                 <div style={{
                     position: 'absolute',
                     top: '1rem',

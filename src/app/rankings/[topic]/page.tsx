@@ -50,7 +50,11 @@ export default async function RankingPage({ params }: RankingPageProps) {
         description = 'Premium global destinations with superior amenities.';
     }
 
-    const { data: cities } = await query as unknown as { data: City[] };
+    const { data: rawCities } = await query as unknown as { data: City[] };
+
+    const cities = rawCities ? rawCities.filter((city, index, self) =>
+        index === self.findIndex(c => c.slug === city.slug)
+    ) : [];
 
     return (
         <div className="container section animate-fade-in">
@@ -63,7 +67,7 @@ export default async function RankingPage({ params }: RankingPageProps) {
             </div>
 
             <div className="grid grid-cols-4" style={{ gap: '3rem' }}>
-                {cities?.map((city, idx) => (
+                {cities.map((city, idx) => (
                     <div key={city.slug} style={{ position: 'relative' }}>
                         <div style={{
                             position: 'absolute',

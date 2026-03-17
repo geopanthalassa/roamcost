@@ -31,8 +31,17 @@ export default function ComparePage({ params }: ComparePageProps) {
             const { data } = await supabase
                 .from('cities_master')
                 .select('*')
-                .in('slug', [slug1, slug2]);
-            setCities((data as any as City[]) || []);
+                .in('slug', [slug1, slug2])
+                .order('population', { ascending: false });
+
+            if (data) {
+                const uniqueCities = (data as any as City[]).filter((city, index, self) =>
+                    index === self.findIndex(c => c.slug === city.slug)
+                );
+                setCities(uniqueCities);
+            } else {
+                setCities([]);
+            }
             setLoading(false);
         };
         fetchData();

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import SearchBar from '@/components/SearchBar';
 import CityCard from '@/components/CityCard';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 const WorldMap = dynamic(() => import('@/components/WorldMap'), {
     ssr: false,
@@ -46,10 +47,20 @@ export default function HomeClient({
                     right: 0,
                     bottom: 0,
                     zIndex: 0,
-                    backgroundImage: 'linear-gradient(rgba(34, 34, 34, 0.7), rgba(34, 34, 34, 0.9)), url(https://source.unsplash.com/1920x1080/?travel,skyline,city)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }} />
+                }}>
+                    <Image
+                        src="https://source.unsplash.com/1920x1080/?travel,skyline,city"
+                        alt="Global Travel Background"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        priority
+                    />
+                    <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: 'linear-gradient(rgba(34, 34, 34, 0.7), rgba(34, 34, 34, 0.9))'
+                    }} />
+                </div>
 
                 <div className="container animate-fade-in" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
                     {/* Persona Switcher */}
