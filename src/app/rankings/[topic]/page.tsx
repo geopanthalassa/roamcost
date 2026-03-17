@@ -54,14 +54,15 @@ export default async function RankingPage({ params }: RankingPageProps) {
 
     return (
         <div className="container section animate-fade-in">
-            <div style={{ marginBottom: '5rem', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '4rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.04em' }}>
+            <div style={{ marginBottom: '6rem', textAlign: 'center', marginTop: '2rem' }}>
+                <span style={{ color: 'var(--muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '0.875rem', display: 'block', marginBottom: '1rem' }}>Global Analysis</span>
+                <h1 style={{ fontSize: '4.5rem', fontWeight: 900, color: 'var(--foreground)', letterSpacing: '-0.04em', marginBottom: '1rem' }}>
                     {title}
                 </h1>
-                <p style={{ color: 'var(--muted)', fontSize: '1.4rem', fontWeight: 500 }}>{description}</p>
+                <p style={{ color: 'var(--muted)', fontSize: '1.25rem', fontWeight: 500, maxWidth: '600px', margin: '0 auto' }}>{description}</p>
             </div>
 
-            <div className="grid grid-cols-4" style={{ gap: '2.5rem' }}>
+            <div className="grid grid-cols-4" style={{ gap: '3rem' }}>
                 {cities?.map((city, idx) => (
                     <div key={city.slug} style={{ position: 'relative' }}>
                         <div style={{
@@ -69,17 +70,18 @@ export default async function RankingPage({ params }: RankingPageProps) {
                             top: '-15px',
                             left: '-15px',
                             zIndex: 10,
-                            backgroundColor: 'var(--secondary)',
+                            backgroundColor: 'white',
                             color: 'var(--foreground)',
-                            width: '40px',
-                            height: '40px',
+                            width: '45px',
+                            height: '45px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderRadius: '12px',
-                            fontSize: '1.1rem',
+                            borderRadius: '50%',
+                            fontSize: '1.25rem',
                             fontWeight: 900,
-                            boxShadow: 'var(--shadow-md)'
+                            boxShadow: 'var(--shadow-md)',
+                            border: '2px solid var(--border)'
                         }}>
                             #{idx + 1}
                         </div>

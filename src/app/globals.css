@@ -1,58 +1,52 @@
 :root {
-  /* FinTech x Travel High-Fidelity Palette */
-  --primary: #2A41CB;
-  /* Deep Indigo for trust */
-  --primary-glow: rgba(42, 65, 203, 0.15);
-  --secondary: #00D1FF;
-  /* Electric Cyan for action */
-  --secondary-dark: #00b8e6;
-  --accent: #E8F9F3;
-  /* Soft Mint for highlights */
-  --action-soft: #9fb8b0;
-  /* Sage/Mint from screenshot */
-  --headline: #0f172a;
-  /* Deep matte black/indigo */
+  /* Mint / Olive Palette */
+  --primary: #3EB489;
+  /* Mint Green */
+  --secondary: #556B2F;
+  /* Olive Green */
+  --accent: #FF8C42;
+  /* Orange - CTA */
   --background: #ffffff;
-  --foreground: #0f172a;
+  --foreground: #222222;
+  /* Dark Gray */
   --muted: #64748b;
-  --muted-light: #f1f5f9;
+  --muted-light: #f5f5f5;
+  /* Light Gray */
   --border: #e2e8f0;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #222222;
 
   /* Glassmorphism & Modern Effects */
   --glass: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-shadow: 0 8px 32px 0 rgba(42, 65, 203, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(62, 180, 137, 0.08);
 
   /* Modern Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 15px -3px rgba(42, 65, 203, 0.08), 0 4px 6px -2px rgba(42, 65, 203, 0.04);
-  --shadow-lg: 0 20px 25px -5px rgba(42, 65, 203, 0.1), 0 10px 10px -5px rgba(42, 65, 203, 0.04);
-  --shadow-xl: 0 25px 50px -12px rgba(42, 65, 203, 0.15);
+  --shadow-md: 0 10px 15px -3px rgba(62, 180, 137, 0.08), 0 4px 6px -2px rgba(62, 180, 137, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(62, 180, 137, 0.1), 0 10px 10px -5px rgba(62, 180, 137, 0.04);
+  --shadow-xl: 0 25px 50px -12px rgba(62, 180, 137, 0.15);
 
   /* Spaced-out Layout Variables */
-  --radius-sm: 0.5rem;
-  /* 8px */
-  --radius-md: 1rem;
-  /* 16px */
-  --radius-lg: 1.5rem;
-  /* 24px */
-  --radius-xl: 2rem;
-  /* 32px */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --foreground: #f8fafc;
-    --primary: #3d55df;
-    --muted: #94a3b8;
-    --muted-light: #1e293b;
-    --border: #1e293b;
-    --card: #1e293b;
-    --card-foreground: #f8fafc;
-    --glass: rgba(15, 23, 42, 0.7);
+    --background: #222222;
+    --foreground: #f5f5f5;
+    --primary: #3EB489;
+    --secondary: #556B2F;
+    --accent: #FF8C42;
+    --muted: #64748b;
+    --muted-light: #333333;
+    --border: #333333;
+    --card: #2a2a2a;
+    --card-foreground: #f5f5f5;
+    --glass: rgba(34, 34, 34, 0.7);
     --glass-border: rgba(255, 255, 255, 0.1);
   }
 }

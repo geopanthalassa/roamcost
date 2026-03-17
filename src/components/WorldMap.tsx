@@ -1,27 +1,28 @@
 'use client';
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import L from 'leaflet';
 
-// Fix for default marker icons in Leaflet + Next.js using DivIcon for stability and custom look
 const createCustomIcon = (costIndex: number) => {
-    // Determine color based on cost index (Cyan for low, Indigo for high)
-    const color = costIndex > 50 ? '#2A41CB' : '#00D1FF';
+    let color = '#3EB489'; // Mint Green (cheap, < 45)
+    if (costIndex >= 45 && costIndex < 75) color = '#FF8C42'; // Orange (medium)
+    if (costIndex >= 75) color = '#ef4444'; // Red (expensive)
     return L.divIcon({
         className: 'custom-map-marker',
         html: `<div style="
             background-color: ${color};
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
         "></div>`,
-        iconSize: [12, 12],
-        iconAnchor: [6, 6],
+        iconSize: [14, 14],
+        iconAnchor: [7, 7],
     });
 };
 
@@ -50,10 +51,10 @@ export default function WorldMap({ cities }: WorldMapProps) {
     }
 
     return (
-        <div className="card" style={{ padding: '0.5rem', overflow: 'hidden', height: '600px', border: 'none', boxShadow: 'var(--shadow-xl)' }}>
+        <div className="card" style={{ padding: '0.5rem', overflow: 'hidden', height: '600px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-xl)' }}>
             <MapContainer
                 center={[20, 0] as any}
-                zoom={2}
+                zoom={2.5}
                 style={{ height: '100%', width: '100%', borderRadius: 'calc(var(--radius-xl) - 0.5rem)' }}
                 scrollWheelZoom={false}
             >
@@ -67,34 +68,61 @@ export default function WorldMap({ cities }: WorldMapProps) {
                         position={[city.lat, city.lng] as any}
                         icon={createCustomIcon(city.cost_index)}
                     >
-                        <Popup>
-                            <div style={{ padding: '0.5rem', minWidth: '160px', fontFamily: "'Inter', sans-serif" }}>
-                                <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem', fontWeight: 900, color: 'var(--headline)' }}>{city.city}</h3>
-                                <p style={{ margin: '0 0 0.75rem 0', color: 'var(--muted)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{city.country}</p>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border)' }}>
-                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase' }}>Score</span>
-                                        <span style={{ fontWeight: 900, color: 'var(--primary)', fontSize: '1rem' }}>{city.cost_index}</span>
+                        <Tooltip direction="top" offset={[0, -10]} opacity={0.95}>
+                            <div style={{ fontSize: '0.85rem', fontFamily: "'Inter', sans-serif" }}>
+                                <strong style={{ display: 'block', color: 'var(--foreground)' }}>{city.city}, {city.country}</strong>
+                                <span style={{ color: 'var(--muted)' }}>Cost Index: {city.cost_index}</span>
+                            </div>
+                        </Tooltip>
+                        <Popup className="custom-popup">
+                            <div style={{ padding: '0', minWidth: '220px', fontFamily: "'Inter', sans-serif", overflow: 'hidden', borderRadius: '8px' }}>
+                                <div style={{
+                                    height: '120px',
+                                    backgroundImage: `url(https://source.unsplash.com/400x300/?${encodeURIComponent(city.city)}+skyline)`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    borderTopLeftRadius: '6px',
+                                    borderTopRightRadius: '6px'
+                                }} />
+                                <div style={{ padding: '1rem' }}>
+                                    <h3 style={{ margin: '0 0 0.15rem 0', fontSize: '1.1rem', fontWeight: 900, color: 'var(--foreground)' }}>{city.city}</h3>
+                                    <p style={{ margin: '0 0 0.75rem 0', color: 'var(--muted)', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{city.country}</p>
+
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border)' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase' }}>Score</span>
+                                            <span style={{ fontWeight: 900, color: 'var(--primary)', fontSize: '1.25rem', lineHeight: 1 }}>{city.cost_index}</span>
+                                        </div>
+                                        <Link
+                                            href={`/city/${city.slug}`}
+                                            style={{
+                                                backgroundColor: 'var(--accent)',
+                                                color: 'white',
+                                                padding: '0.5rem 1rem',
+                                                fontSize: '0.8rem',
+                                                borderRadius: 'var(--radius-sm)',
+                                                fontWeight: 800,
+                                                letterSpacing: '0.02em',
+                                                transition: 'background-color 0.2s',
+                                                textDecoration: 'none'
+                                            }}
+                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#e07a38'}
+                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--accent)'}
+                                        >
+                                            Explore
+                                        </Link>
                                     </div>
-                                    <Link
-                                        href={`/city/${city.slug}`}
-                                        style={{
-                                            backgroundColor: 'var(--primary)',
-                                            color: 'white',
-                                            padding: '0.4rem 0.8rem',
-                                            fontSize: '0.75rem',
-                                            borderRadius: 'var(--radius-sm)',
-                                            fontWeight: 700
-                                        }}
-                                    >
-                                        Explore
-                                    </Link>
                                 </div>
                             </div>
                         </Popup>
                     </Marker>
                 ))}
             </MapContainer>
+
+            <style>{`
+                .custom-popup .leaflet-popup-content-wrapper { padding: 0; overflow: hidden; border-radius: 8px; box-shadow: var(--shadow-xl); }
+                .custom-popup .leaflet-popup-content { margin: 0; width: 220px !important; }
+            `}</style>
         </div>
     );
 }

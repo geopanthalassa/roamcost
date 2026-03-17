@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { City } from '@/types/database';
 import Link from 'next/link';
 import CityCard from '@/components/CityCard';
+import SideBySideChart from '@/components/SideBySideChart';
 import { useCurrency } from '@/context/CurrencyContext';
 import React, { useEffect, useState, use } from 'react';
 
@@ -55,83 +56,56 @@ export default function ComparePage({ params }: ComparePageProps) {
         );
     }
 
-    const comparisonMetrics = [
-        { label: 'Overall Quality Score', key: 'cost_index', isPrice: false },
-        { label: 'Monthly Rent Est.', key: 'rent_index', isPrice: true, factor: 10 },
-        { label: 'Food & Dining', key: 'food_index', isPrice: true, factor: 5 },
-        { label: 'Transport', key: 'transport_index', isPrice: true, factor: 2 },
-        { label: 'Safety Score', key: 'safety', isPrice: false },
-        { label: 'Internet Speed', key: 'internet', isPrice: false },
-        { label: 'Healthcare Quality', key: 'healthcare', isPrice: false },
+    const costChartData = [
+        { category: 'Overall Cost Index', city1Value: city1.cost_index, city2Value: city2.cost_index, city1Name: city1.city, city2Name: city2.city },
+        { category: 'Rent Index', city1Value: city1.rent_index, city2Value: city2.rent_index, city1Name: city1.city, city2Name: city2.city },
+        { category: 'Food Index', city1Value: city1.food_index, city2Value: city2.food_index, city1Name: city1.city, city2Name: city2.city },
+        { category: 'Transport', city1Value: city1.transport_index, city2Value: city2.transport_index, city1Name: city1.city, city2Name: city2.city },
+    ];
+
+    const qualityChartData = [
+        { category: 'Safety Score', city1Value: city1.safety, city2Value: city2.safety, city1Name: city1.city, city2Name: city2.city },
+        { category: 'Healthcare', city1Value: city1.healthcare || 70, city2Value: city2.healthcare || 70, city1Name: city1.city, city2Name: city2.city },
+        { category: 'Internet', city1Value: city1.internet, city2Value: city2.internet, city1Name: city1.city, city2Name: city2.city },
+        { category: 'Environment', city1Value: city1.environment || 65, city2Value: city2.environment || 65, city1Name: city1.city, city2Name: city2.city }
     ];
 
     return (
         <div className="compare-page container section animate-fade-in">
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontWeight: 900, fontSize: '3.5rem' }}>
-                    <span style={{ color: 'var(--primary)' }}>{city1.city}</span> <span style={{ color: 'var(--muted)', fontSize: '2rem' }}>vs</span> <span style={{ color: 'var(--primary)' }}>{city2.city}</span>
+                <h1 style={{ fontWeight: 900, fontSize: '4.5rem', letterSpacing: '-0.04em' }}>
+                    <span style={{ color: 'var(--primary)' }}>{city1.city}</span> <span style={{ color: 'var(--muted)', fontSize: '2.5rem', margin: '0 1rem' }}>vs</span> <span style={{ color: 'var(--accent)' }}>{city2.city}</span>
                 </h1>
-                <p style={{ color: 'var(--muted)', fontSize: '1.25rem' }}>Detailed side-by-side breakdown of living standards and costs.</p>
+                <p style={{ color: 'var(--muted)', fontSize: '1.25rem', marginTop: '1rem', fontWeight: 500 }}>Detailed side-by-side analysis of living standards and costs.</p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
-                {/* Metric Labels Column */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'center', paddingRight: '2rem' }}>
-                    {comparisonMetrics.map((metric) => (
-                        <div key={metric.label}>
-                            <div style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                {metric.label}
-                            </div>
-                        </div>
-                    ))}
+            <div className="grid grid-cols-2" style={{ gap: '3rem', marginBottom: '4rem' }}>
+                {/* Financial Comparison */}
+                <div className="card" style={{ padding: '3rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-md)' }}>
+                    <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'var(--foreground)', fontWeight: 900, letterSpacing: '-0.02em', textAlign: 'center' }}>
+                        Financial Breakdown
+                    </h2>
+                    <SideBySideChart data={costChartData as any} />
                 </div>
 
-                {/* City 1 Column */}
-                <div className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', border: '2px solid var(--primary-glow)' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '2.5rem' }}>{city1.city}</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                        {comparisonMetrics.map((metric) => {
-                            const raw = (city1 as any)[metric.key];
-                            const val = metric.isPrice ? formatValue(raw * (metric.factor || 1)) : raw;
-                            return (
-                                <div key={metric.label}>
-                                    <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--primary)' }}>{val}</div>
-                                    <div style={{ height: '6px', background: 'var(--muted-light)', borderRadius: '10px', marginTop: '0.5rem', overflow: 'hidden' }}>
-                                        <div style={{ height: '100%', width: `${Math.min(100, (raw / 100) * 100)}%`, background: 'var(--primary)', borderRadius: '10px' }} />
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* City 2 Column */}
-                <div className="card" style={{ padding: '3rem', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '2.5rem' }}>{city2.city}</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                        {comparisonMetrics.map((metric) => {
-                            const raw = (city2 as any)[metric.key];
-                            const val = metric.isPrice ? formatValue(raw * (metric.factor || 1)) : raw;
-                            return (
-                                <div key={metric.label}>
-                                    <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--primary)' }}>{val}</div>
-                                    <div style={{ height: '6px', background: 'var(--muted-light)', borderRadius: '10px', marginTop: '0.5rem', overflow: 'hidden' }}>
-                                        <div style={{ height: '100%', width: `${Math.min(100, (raw / 100) * 100)}%`, background: 'var(--primary)', borderRadius: '10px' }} />
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                {/* Quality of Life Comparison */}
+                <div className="card" style={{ padding: '3rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-md)' }}>
+                    <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'var(--foreground)', fontWeight: 900, letterSpacing: '-0.02em', textAlign: 'center' }}>
+                        Quality of Life Factors
+                    </h2>
+                    <SideBySideChart data={qualityChartData as any} />
                 </div>
             </div>
 
-            <div style={{ marginTop: '6rem', display: 'flex', justifyContent: 'center', gap: '3rem' }}>
-                <div style={{ width: '400px' }}><CityCard city={city1} /></div>
-                <div style={{ width: '400px' }}><CityCard city={city2} /></div>
+            <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '3rem' }}>
+                <div style={{ width: '450px' }}><CityCard city={city1} /></div>
+                <div style={{ width: '450px' }}><CityCard city={city2} /></div>
             </div>
 
-            <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-                <Link href="/compare" className="btn btn-outline" style={{ padding: '1rem 2.5rem' }}>Make New Comparison</Link>
+            <div style={{ textAlign: 'center', marginTop: '5rem' }}>
+                <Link href="/compare" className="btn" style={{ padding: '1.25rem 3rem', background: 'var(--foreground)', color: 'white', fontWeight: 800, borderRadius: 'var(--radius-lg)', letterSpacing: '0.02em', boxShadow: 'var(--shadow-md)' }}>
+                    Make Another Comparison
+                </Link>
             </div>
         </div>
     );

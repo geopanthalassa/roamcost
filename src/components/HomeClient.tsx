@@ -33,23 +33,30 @@ export default function HomeClient({
         <div className="homepage">
             {/* Hero Section */}
             <section className="hero" style={{
-                padding: '12rem 0 14rem',
-                background: 'linear-gradient(210deg, var(--primary) 0%, #1e1b4b 100%)',
-                color: 'white',
-                textAlign: 'center',
+                padding: '10rem 0 12rem',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                backgroundColor: 'var(--primary)',
             }}>
-                {/* Abstract FinTech geometric highlights */}
-                <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40%', height: '40%', background: 'radial-gradient(circle, rgba(0, 209, 255, 0.15) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-                <div style={{ position: 'absolute', bottom: '-20%', left: '-5%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(232, 249, 243, 0.1) 0%, transparent 80%)', filter: 'blur(60px)' }} />
+                {/* Dynamic Global Background Image */}
+                <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 0,
+                    backgroundImage: 'linear-gradient(rgba(34, 34, 34, 0.7), rgba(34, 34, 34, 0.9)), url(https://source.unsplash.com/1920x1080/?travel,skyline,city)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }} />
 
-                <div className="container animate-fade-in" style={{ position: 'relative', zIndex: 1 }}>
+                <div className="container animate-fade-in" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
                     {/* Persona Switcher */}
                     <div style={{
                         display: 'inline-flex',
                         background: 'rgba(255, 255, 255, 0.1)',
-                        backdropFilter: 'blur(10px)',
+                        backdropFilter: 'blur(16px)',
                         padding: '0.4rem',
                         borderRadius: 'var(--radius-xl)',
                         marginBottom: '3rem',
@@ -58,13 +65,14 @@ export default function HomeClient({
                         <button
                             onClick={() => setPersona('nomad')}
                             style={{
-                                padding: '0.75rem 1.5rem',
+                                padding: '0.75rem 1.75rem',
                                 borderRadius: 'var(--radius-lg)',
-                                fontSize: '0.875rem',
+                                fontSize: '0.9rem',
                                 fontWeight: 700,
-                                color: persona === 'nomad' ? 'var(--primary)' : 'white',
+                                color: persona === 'nomad' ? 'var(--foreground)' : 'white',
                                 background: persona === 'nomad' ? 'white' : 'transparent',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                                transition: 'all 0.3s ease',
+                                boxShadow: persona === 'nomad' ? 'var(--shadow-md)' : 'none'
                             }}
                         >
                             Digital Nomad
@@ -72,30 +80,31 @@ export default function HomeClient({
                         <button
                             onClick={() => setPersona('family')}
                             style={{
-                                padding: '0.75rem 1.5rem',
+                                padding: '0.75rem 1.75rem',
                                 borderRadius: 'var(--radius-lg)',
-                                fontSize: '0.875rem',
+                                fontSize: '0.9rem',
                                 fontWeight: 700,
-                                color: persona === 'family' ? 'var(--primary)' : 'white',
+                                color: persona === 'family' ? 'var(--foreground)' : 'white',
                                 background: persona === 'family' ? 'white' : 'transparent',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                                transition: 'all 0.3s ease',
+                                boxShadow: persona === 'family' ? 'var(--shadow-md)' : 'none'
                             }}
                         >
-                            Family
+                            Family Relocation
                         </button>
                     </div>
 
-                    <h1 style={{ fontSize: '5rem', marginBottom: '1.5rem', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.06em' }}>
-                        Explore the world, <br />
-                        <span style={{ color: 'var(--secondary)' }}>Smarter.</span>
+                    <h1 style={{ fontSize: '4.5rem', marginBottom: '1.5rem', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.04em', color: 'white' }}>
+                        Find Your Perfect <br />
+                        <span style={{ color: 'var(--primary)' }}>Global Base.</span>
                     </h1>
-                    <p style={{ fontSize: '1.5rem', color: 'rgba(255, 255, 255, 0.85)', marginBottom: '4rem', maxWidth: '800px', margin: '0 auto 4rem', fontWeight: 500 }}>
+                    <p style={{ fontSize: '1.25rem', color: 'rgba(255, 255, 255, 0.9)', marginBottom: '4rem', maxWidth: '700px', margin: '0 auto 4rem', fontWeight: 500 }}>
                         {persona === 'nomad'
-                            ? "Comprehensive data for professionals seeking their next base."
-                            : "Reliable insights for families planning their next relocation."
+                            ? "Data-driven insights on internet speeds, rentals, and safety for remote professionals."
+                            : "Comprehensive quality of life, healthcare, and safety metrics for your family's next move."
                         }
                     </p>
-                    <div style={{ maxWidth: '850px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                         <SearchBar persona={persona} />
                     </div>
                 </div>

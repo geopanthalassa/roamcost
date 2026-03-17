@@ -5,35 +5,36 @@ import Translator from './Translator';
 import { useCurrency } from '@/context/CurrencyContext';
 
 export default function Header() {
-    const { currency, setCurrency } = useCurrency();
-
     return (
         <header className="header" style={{
-            padding: '2rem 0',
+            padding: '1.25rem 0',
             backgroundColor: 'var(--background)',
+            borderBottom: '1px solid var(--border)',
+            position: 'sticky',
+            top: 0,
             zIndex: 100,
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Link href="/" style={{
                     fontSize: '1.5rem',
-                    fontWeight: 900,
-                    color: 'var(--headline)',
-                    letterSpacing: '-0.04em',
+                    fontWeight: 800,
+                    color: 'var(--foreground)',
+                    letterSpacing: '-0.02em',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.4rem'
+                    gap: '0.5rem'
                 }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#105e4e' }}>
-                        <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                     </svg>
-                    RoamCost
+                    Roam<span style={{ color: 'var(--primary)' }}>Cost</span>
                 </Link>
 
                 <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-                    <Link href="/" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Home</Link>
-                    <Link href="/rankings/quality" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Rankings</Link>
-                    <Link href="/compare" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Calculator</Link>
-                    <Link href="/rankings/nomads" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '0.95rem' }}>Nomad Cities</Link>
+                    <Link href="/" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '1rem', transition: 'color 0.2s' }}>Home</Link>
+                    <Link href="/rankings/quality" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '1rem', transition: 'color 0.2s' }}>Rankings</Link>
+                    <Link href="/compare" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '1rem', transition: 'color 0.2s' }}>Compare</Link>
+                    <Link href="/rankings/nomads" style={{ fontWeight: 600, color: 'var(--muted)', fontSize: '1rem', transition: 'color 0.2s' }}>Nomads</Link>
                 </nav>
             </div>
         </header>
